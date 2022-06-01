@@ -1,2 +1,2 @@
-node virusOutbreak.js < input1.txt
+node worldArmy.js < input1.txt
 cmd /k echo "Finished"

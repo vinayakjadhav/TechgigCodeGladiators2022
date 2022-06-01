@@ -11,54 +11,38 @@ process.stdin.on('data', function(data) {
 });
 
 process.stdin.on('end', function() {
-  var sequence;
-  var subSequences;
   input_stdin_array = input_stdin.split("\r\n");
   // console.log(input_stdin_array)
 
   //Write code here
-  var sequence = input_stdin_array[0];
-  var noOfSubSequnces = input_stdin_array[1];
-  output = new Array(+noOfSubSequnces).fill('NEGATIVE');
-  var subSeqHeads = new Array(+noOfSubSequnces).fill(0);
-  subSequnces = [];
-  input_currentline = 2;
-  for (var i = 0; i < noOfSubSequnces; i++) {
-    //    // console.log(input_stdin_array[input_currentline]);
-    subSequnces.push(input_stdin_array[input_currentline])
-    input_currentline++;
+  var launchTime = input_stdin_array[0].split(" ");
+  var travelTime = input_stdin_array[1].split(" ");
+
+  var launchTimeHr = launchTime[0];
+  var launchTimeMin = launchTime[1]
+
+  var travelTimeHr = travelTime[0];
+  var travelTimeMin = travelTime[1]
+
+  var blastTimeHr = +launchTimeHr + +travelTimeHr;
+  var blastTimeMin = +launchTimeMin + +travelTimeMin;
+
+  if (blastTimeMin >= 60) {
+    blastTimeHr++;
+    blastTimeMin -= 60;
   }
-  // console.log(sequence);
-  // console.log(noOfSubSequnces);
-  // console.log(subSequnces);
-
-  subSequence();
-
-  function subSequence() {
-    for (var i = 0; i < sequence.length; i++) {
-      for (var j = 0; j < noOfSubSequnces; j++) {
-        if (subSequnces[j][subSeqHeads[j]] == sequence[i]) {
-          // console.log("(i,subSeqHeads)", i, subSeqHeads[j], "subSequnces[j][subSeqHeads[j]] == sequence[i] ", subSequnces[j][subSeqHeads[j]] == sequence[i]);
-          subSeqHeads[j]++;
-        } else if (!sequence.includes(subSequnces[j][subSeqHeads[j]])) {
-          // console.log("sequence.includes(subSequnces[j][subSeqHeads[j]] ", sequence, subSequnces[j][subSeqHeads[j]], sequence.includes(subSequnces[j][subSeqHeads[j]]));
-          output[j] = 'NEGATIVE';
-          continue;
-        }
-      }
-
-    }
-
-    for (var j = 0; j < noOfSubSequnces; j++) {
-      //  // console.log(subSeqHeads[j], (subSequnces[j].length))
-      if (subSeqHeads[j] == subSequnces[j].length) {
-        output[j] = "POSITIVE";
-      }
-    }
-    return output;
-
+  if (blastTimeHr >= 24) {
+    blastTimeHr = blastTimeHr - 24;
+  }
+  if (blastTimeMin < 10) {
+    blastTimeMin = "0" + blastTimeMin;
+  }
+  if (blastTimeHr < 10) {
+    blastTimeHr = "0" + blastTimeHr;
   }
 
-  console.log(output.join("\n"));
-  //process.stdout.write("" + output.join("\n") + "");
+  output = blastTimeHr + " " + blastTimeMin;
+
+  //console.log(output);
+  process.stdout.write("" + output + "");
 });
