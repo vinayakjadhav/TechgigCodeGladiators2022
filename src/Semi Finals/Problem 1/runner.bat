@@ -1,2 +1,2 @@
-node JazzyAndCricketBalls.js < input1.txt
+node examcenter.js < input1.txt
 cmd /k echo "Finished"
